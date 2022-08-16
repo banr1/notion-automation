@@ -1,5 +1,5 @@
 [package]
-name = "notion-automate"
+name = "notion-automation"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 reqwest = { version = "0.11", features = ["blocking", "json"] }
+dotenv = "0.15.0"
