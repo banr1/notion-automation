@@ -1,5 +1,18 @@
 use dotenv::dotenv;
+use serde::Deserialize;
 use std::env;
+
+#[derive(Deserialize)]
+struct Page {
+    object: String,
+    id: String,
+}
+
+#[derive(Deserialize)]
+struct QueryDatabaseResp {
+    object: String,
+    results: Vec<Page>,
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
@@ -16,12 +29,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         notion_api_token = notion_api_token
     );
 
-    let resp = client
+    let resp: QueryDatabaseResp = client
         .post(url)
         .header(reqwest::header::CONTENT_TYPE, "application/json")
         .header(reqwest::header::AUTHORIZATION, auth)
-        .send()?;
-    let result = resp.text()?;
-    println!("{:#?}", result);
+        .send()?
+        .json()?;
+    println!("{:#?}", resp.object);
+    println!("{:#?}", resp.results[0].object);
+    println!("{:#?}", resp.results[0].id);
     Ok(())
 }
