@@ -1,6 +1,10 @@
+mod emoji;
 mod notion;
-use dotenv::dotenv;
+mod page;
 mod query_database;
+mod update_page;
+
+use dotenv::dotenv;
 use std::env;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -9,7 +13,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let database_id = env::var("NOTION_DATABASE_ID")?;
 
     let notion = notion::Notion::new(notion_api_token, database_id);
-    notion.query_database();
+    let database = notion.query_database()?;
+    let page_id = &database.results[0].id;
+    println!("{}", &database.results[0].url.to_string());
+    let resp = notion.update_page(page_id.to_string())?;
+    println!("{}", &resp.url.to_string());
 
     Ok(())
 }
