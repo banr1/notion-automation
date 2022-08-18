@@ -4,7 +4,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
 pub struct UpdatePageBody {
-    icon: Emoji,
+    pub properties: Option<String>,
+    pub archived: Option<bool>,
+    pub icon: Option<Emoji>,
+    pub cover: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -18,14 +21,12 @@ impl Notion {
     pub fn update_page(
         &self,
         page_id: String,
+        body: &UpdatePageBody,
     ) -> Result<UpdatePageResp, Box<dyn std::error::Error>> {
         let url = format!(
             "https://api.notion.com/v1/pages/{page_id}",
             page_id = page_id,
         );
-        let body = UpdatePageBody {
-            icon: Emoji::new("🐶".to_string()),
-        };
         let resp = self
             .client
             .patch(url)
