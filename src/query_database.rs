@@ -13,14 +13,22 @@ pub struct FormulaFilter {
 }
 
 #[derive(Serialize)]
-pub struct PropertyFilter {
+pub struct Filter {
     pub property: String,
     pub formula: FormulaFilter,
 }
 
 #[derive(Serialize)]
+pub struct Sort {
+    pub property: String,
+}
+
+#[derive(Serialize)]
 pub struct QueryDatabaseBody {
-    pub filter: PropertyFilter,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub sort: Option<Sort>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub filter: Option<Filter>,
 }
 
 #[derive(Deserialize)]
@@ -32,7 +40,7 @@ pub struct QueryDatabaseResp {
 impl Notion {
     pub fn query_database(
         &self,
-        body: QueryDatabaseBody,
+        body: &QueryDatabaseBody,
     ) -> Result<QueryDatabaseResp, Box<dyn std::error::Error>> {
         let url = format!(
             "https://api.notion.com/v1/databases/{database_id}/query",

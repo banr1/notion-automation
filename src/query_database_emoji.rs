@@ -1,9 +1,22 @@
+use crate::icon::Icon;
 use crate::notion::Notion;
-use crate::page::Page;
-use crate::query_database::QueryDatabaseResp;
-use serde::Deserialize;
+use crate::query_database::{QueryDatabaseBody, QueryDatabaseResp};
 
 impl Notion {
-    // pub fn query_database_emoji(&self) -> Result<QueryDatabaseEResp, Box<dyn std::error::Error>> {
-    // }
+    pub fn query_database_emoji(
+        &self,
+        body: &QueryDatabaseBody,
+        cond: &String,
+    ) -> Result<QueryDatabaseResp, Box<dyn std::error::Error>> {
+        let resp: QueryDatabaseResp = self.query_database(&body)?;
+        match resp.results[0].icon {
+            Icon::File => {
+                println!("file");
+            }
+            Icon::Emoji => {
+                println!("emoji");
+            }
+        }
+        Ok(resp)
+    }
 }

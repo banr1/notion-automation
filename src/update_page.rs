@@ -1,4 +1,4 @@
-use crate::emoji::Emoji;
+use crate::icon::Emoji;
 use crate::notion::Notion;
 use serde::{Deserialize, Serialize};
 
