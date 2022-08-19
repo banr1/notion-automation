@@ -25,18 +25,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             },
         }),
     };
-    let query_database_cond = "🐯".to_string();
+    let query_database_cond = "🧑".to_string();
     let database = notion.query_database_emoji(&query_database_body, &query_database_cond)?;
-    let page_id = &database.results[0].id;
-    println!("{}", &database.results[0].url.to_string());
-    // let update_page_body = UpdatePageBody {
-    //     properties: None,
-    //     archived: None,
-    //     icon: Some(Emoji::new("🐶".to_string())),
-    //     cover: None,
-    // };
-    // let resp = notion.update_page(page_id.to_string(), &update_page_body)?;
-    // println!("{}", &resp.url.to_string());
+    println!("length of filtered pages: {}", database.results.len());
+    println!("first url: {}", &database.results[0].url.to_string());
+    let update_page_body = UpdatePageBody {
+        properties: None,
+        archived: None,
+        icon: Some(icon::Emoji {
+            emoji: "🐶".to_string(),
+        }),
+        cover: None,
+    };
+    for page in &database.results {
+        let resp = notion.update_page(page.id.to_string(), &update_page_body)?;
+        println!("{}", &resp.url.to_string());
+    }
 
     Ok(())
 }

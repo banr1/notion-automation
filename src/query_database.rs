@@ -33,7 +33,6 @@ pub struct QueryDatabaseBody {
 
 #[derive(Deserialize)]
 pub struct QueryDatabaseResp {
-    object: String,
     pub results: Vec<Page>,
 }
 

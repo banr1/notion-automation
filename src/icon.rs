@@ -1,26 +1,26 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
 #[serde(tag = "type")]
 pub enum Icon {
     #[serde(rename = "emoji")]
-    Emoji,
+    Emoji(Emoji),
     #[serde(rename = "file")]
-    File,
+    File(File),
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
 pub struct Emoji {
-    emoji: String,
+    pub emoji: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
 pub struct File {
-    file: FileContent,
+    pub file: FileContent,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
 pub struct FileContent {
-    url: String,
-    expiry_time: String,
+    pub url: String,
+    pub expiry_time: String,
 }

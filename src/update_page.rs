@@ -4,16 +4,20 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
 pub struct UpdatePageBody {
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub properties: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub archived: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub icon: Option<Emoji>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub cover: Option<String>,
 }
 
 #[derive(Deserialize)]
 pub struct UpdatePageResp {
-    object: String,
-    id: String,
+    // object: String,
+    pub id: String,
     pub url: String,
 }
 

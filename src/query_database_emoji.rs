@@ -1,5 +1,6 @@
 use crate::icon::Icon;
 use crate::notion::Notion;
+use crate::page::Page;
 use crate::query_database::{QueryDatabaseBody, QueryDatabaseResp};
 
 impl Notion {
@@ -9,14 +10,16 @@ impl Notion {
         cond: &String,
     ) -> Result<QueryDatabaseResp, Box<dyn std::error::Error>> {
         let resp: QueryDatabaseResp = self.query_database(&body)?;
-        match resp.results[0].icon {
-            Icon::File => {
-                println!("file");
-            }
-            Icon::Emoji => {
-                println!("emoji");
+        let mut filtered_resp = QueryDatabaseResp {
+            results: Vec::<Page>::new(),
+        };
+        for page in &resp.results {
+            if let Icon::Emoji(_emoji) = &page.icon {
+                if &_emoji.emoji == cond {
+                    filtered_resp.results.push(page.clone());
+                }
             }
         }
-        Ok(resp)
+        Ok(filtered_resp)
     }
 }
