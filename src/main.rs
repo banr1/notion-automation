@@ -1,10 +1,16 @@
+mod column;
+mod filter;
 mod icon;
 mod notion;
 mod page;
 mod query_database;
 mod query_database_emoji;
+mod sort;
 mod update_page;
-use crate::query_database::{Filter, FormulaFilter, NumberFilter, QueryDatabaseBody};
+use crate::column::{MultiSelectColumn, Vertical};
+use crate::filter::{Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter};
+use crate::query_database::QueryDatabaseBody;
+use crate::sort::{Sort, SortDirection};
 use crate::update_page::UpdatePageBody;
 
 use dotenv::dotenv;
@@ -17,23 +23,35 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let notion = notion::Notion::new(notion_api_token, database_id);
 
     let query_database_body = QueryDatabaseBody {
-        sort: None,
-        filter: Some(Filter {
-            property: "Num of Vertical".to_string(),
-            formula: FormulaFilter {
-                number: NumberFilter { equals: 1 },
+        sorts: Some(vec![Sort::Timestamp {
+            timestamp: "last_edited_time".to_string(),
+            direction: SortDirection::Descending,
+        }]),
+        filter: Some(FilterKind::And(vec![
+            Filter::NumOfVertical {
+                formula: FormulaFilter::NumberFilter(NumberFilter::Equals(1)),
             },
-        }),
+            Filter::Vertical {
+                multi_select: MultiSelectFilter::Contains(MultiSelectColumn::Vertical(
+                    Vertical::Economy,
+                )),
+            },
+            // Filter::Vertical {
+            //     multi_select: MultiSelectFilter::Contains(MultiSelectColumn::Vertical(
+            //         Vertical::Finance,
+            //     )),
+            // },
+        ])),
     };
+
     let query_database_cond = "🧑".to_string();
     let database = notion.query_database_emoji(&query_database_body, &query_database_cond)?;
     println!("length of filtered pages: {}", database.results.len());
-    println!("first url: {}", &database.results[0].url.to_string());
     let update_page_body = UpdatePageBody {
         properties: None,
         archived: None,
         icon: Some(icon::Emoji {
-            emoji: "🐶".to_string(),
+            emoji: "💸".to_string(),
         }),
         cover: None,
     };
