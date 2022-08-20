@@ -10,11 +10,15 @@ pub struct QueryDatabaseBody {
     pub sorts: Option<Sorts>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub filter: Option<FilterKind>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub start_cursor: Option<String>,
 }
 
 #[derive(Deserialize)]
 pub struct QueryDatabaseResp {
     pub results: Vec<Page>,
+    pub next_cursor: Option<String>,
+    pub has_more: bool,
 }
 
 impl Notion {
@@ -36,5 +40,22 @@ impl Notion {
             .send()?
             .json()?;
         Ok(resp)
+    }
+
+    pub fn query_database_all(
+        &self,
+        body: &mut QueryDatabaseBody,
+    ) -> Result<Vec<Page>, Box<dyn std::error::Error>> {
+        let mut has_more = true;
+        let mut start_cursor: Option<String> = None;
+        let mut pages = Vec::<Page>::new();
+        while has_more {
+            body.start_cursor = start_cursor;
+            let mut resp = self.query_database(&body)?;
+            pages.append(&mut resp.results);
+            has_more = resp.has_more;
+            start_cursor = resp.next_cursor;
+        }
+        Ok(pages)
     }
 }

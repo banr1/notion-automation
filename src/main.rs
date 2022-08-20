@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(notion_api_token, database_id);
 
-    let query_database_body = QueryDatabaseBody {
+    let mut query_database_body = QueryDatabaseBody {
         sorts: Some(vec![Sort::Timestamp {
             timestamp: "last_edited_time".to_string(),
             direction: SortDirection::Descending,
@@ -42,11 +42,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             //     )),
             // },
         ])),
+        start_cursor: None,
     };
 
+    // let pages = notion.query_database_all(&mut query_database_body)?;
     let query_database_cond = "🧑".to_string();
-    let database = notion.query_database_emoji(&query_database_body, &query_database_cond)?;
-    println!("length of filtered pages: {}", database.results.len());
+    let pages = notion.query_database_emoji(&mut query_database_body, &query_database_cond)?;
+    println!("length of pages: {}", pages.len());
     let update_page_body = UpdatePageBody {
         properties: None,
         archived: None,
@@ -55,7 +57,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }),
         cover: None,
     };
-    for page in &database.results {
+    for page in &pages {
         let resp = notion.update_page(page.id.to_string(), &update_page_body)?;
         println!("{}", &resp.url.to_string());
     }
