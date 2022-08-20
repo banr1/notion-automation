@@ -3,9 +3,27 @@ use crate::notion::Notion;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
+pub struct MultiSelectOption {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
+}
+
+#[derive(Serialize)]
+pub enum Property {
+    // Vertical,
+    // Horizontal,
+    // External,
+    Temporary {
+        multi_select: Vec<MultiSelectOption>,
+    },
+}
+
+#[derive(Serialize)]
 pub struct UpdatePageBody {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub properties: Option<String>,
+    pub properties: Option<Property>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub archived: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,12 +49,14 @@ impl Notion {
             "https://api.notion.com/v1/pages/{page_id}",
             page_id = page_id,
         );
+        let body_ = serde_json::to_string(&body).unwrap();
+        println!("{}", body_);
         let resp = self
             .client
             .patch(url)
             .header(reqwest::header::CONTENT_TYPE, "application/json")
             .header(reqwest::header::AUTHORIZATION, &self.auth)
-            .body(serde_json::to_string(&body).unwrap())
+            .body(body_)
             .send()?
             .json()?;
         Ok(resp)

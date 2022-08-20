@@ -2,11 +2,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
 #[serde(tag = "type")]
+#[serde(rename_all = "snake_case")]
 pub enum Icon {
-    #[serde(rename = "emoji")]
     Emoji(Emoji),
-    #[serde(rename = "file")]
     File(File),
+    External(External),
 }
 
 #[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
@@ -23,4 +23,14 @@ pub struct File {
 pub struct FileContent {
     pub url: String,
     pub expiry_time: String,
+}
+
+#[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
+pub struct External {
+    pub external: ExternalContent,
+}
+
+#[derive(Serialize, Deserialize, Eq, PartialEq, Clone)]
+pub struct ExternalContent {
+    pub url: String,
 }

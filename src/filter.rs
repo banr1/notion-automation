@@ -12,6 +12,7 @@ pub enum FilterKind {
 
 #[derive(Serialize)]
 #[serde(tag = "property")]
+#[allow(dead_code)]
 pub enum Filter {
     Vertical {
         multi_select: MultiSelectFilter,
@@ -21,6 +22,9 @@ pub enum Filter {
     #[serde(rename = "Num of Vertical")]
     NumOfVertical {
         formula: FormulaFilter,
+    },
+    Temporary {
+        multi_select: MultiSelectFilter,
     },
 }
 

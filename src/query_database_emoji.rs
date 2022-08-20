@@ -12,7 +12,7 @@ impl Notion {
         let pages: Vec<Page> = self.query_database_all(body)?;
         let mut filtered_pages = Vec::<Page>::new();
         for page in &pages {
-            if let Icon::Emoji(_emoji) = &page.icon {
+            if let Some(Icon::Emoji(_emoji)) = &page.icon {
                 if &_emoji.emoji == cond {
                     filtered_pages.push(page.clone());
                 }

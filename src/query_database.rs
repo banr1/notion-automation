@@ -30,13 +30,14 @@ impl Notion {
             "https://api.notion.com/v1/databases/{database_id}/query",
             database_id = &self.database_id
         );
-        println!("{}", serde_json::to_string(&body).unwrap());
+        let body_ = serde_json::to_string(&body).unwrap();
+        println!("{}", body_);
         let resp: QueryDatabaseResp = self
             .client
             .post(url)
             .header(reqwest::header::CONTENT_TYPE, "application/json")
             .header(reqwest::header::AUTHORIZATION, &self.auth)
-            .body(serde_json::to_string(&body).unwrap())
+            .body(body_)
             .send()?
             .json()?;
         Ok(resp)
