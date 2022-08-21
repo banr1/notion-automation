@@ -83,8 +83,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         icon: None,
         cover: None,
     };
-    for page in &pages {
-        let resp = notion.update_page(page.id.to_string(), &update_page_body)?;
+    for page in pages {
+        let resp = notion.update_page(&page.id.to_string(), &update_page_body)?;
         println!("{}", &resp.url.to_string());
     }
     // }

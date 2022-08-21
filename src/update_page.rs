@@ -56,7 +56,7 @@ pub struct UpdatePageResp {
 impl Notion {
     pub fn update_page(
         &self,
-        page_id: String,
+        page_id: &String,
         body: &UpdatePageBody,
     ) -> Result<UpdatePageResp, Box<dyn std::error::Error>> {
         let url = format!(
