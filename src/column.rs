@@ -92,21 +92,3 @@ pub enum Temporary {
     Debug,
     NoVerticalPerson,
 }
-
-#[derive(Serialize)]
-#[serde(untagged)]
-#[allow(dead_code)]
-pub enum SelectColumn {
-    Version(Version),
-}
-
-#[derive(Serialize)]
-#[serde(untagged)]
-#[allow(dead_code)]
-pub enum MultiSelectColumn {
-    Vertical(Vertical),
-    Horizontal(Horizontal),
-    External(External),
-    Version(Version),
-    Templorary(Temporary),
-}

@@ -7,7 +7,7 @@ mod query_database;
 mod query_database_emoji;
 mod sort;
 mod update_page;
-use crate::column::{MultiSelectColumn, SelectColumn, Temporary, Vertical};
+use crate::column::{Temporary, Version, Vertical};
 use crate::filter::{
     Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
 };
@@ -61,23 +61,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 //     formula: FormulaFilter::NumberFilter(NumberFilter::Equals(1)),
                 // },
                 Filter::Vertical {
-                    multi_select: MultiSelectFilter::Contains(MultiSelectColumn::Vertical(
-                        vertical,
-                    )),
+                    multi_select: MultiSelectFilter::<Vertical>::Contains(vertical),
                 },
                 Filter::Horizontal {
                     multi_select: MultiSelectFilter::IsEmpty(true),
                 },
                 Filter::Version {
                     select: SelectFilter::IsEmpty(true),
-                }
+                },
                 // Filter::Version {
-                //     select: SelectFilter::Equals(SelectColumn::Version(Version::Mar2022)),
+                //     select: SelectFilter::<Version>::Equals(Version::May2022),
                 // },
                 // Filter::Temporary {
-                //     multi_select: MultiSelectFilter::Contains(MultiSelectColumn::Templorary(
-                //         Temporary::Debug,
-                //     )),
+                //     multi_select: MultiSelectFilter::<Temporary>::Contains(Temporary::Debug),
                 // },
             ])),
             start_cursor: None,
