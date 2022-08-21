@@ -2,6 +2,7 @@ mod block;
 mod block_basic;
 mod color;
 mod column;
+mod delete_block;
 mod file;
 mod filter;
 mod heading;
@@ -48,8 +49,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     for page in pages {
         let blocks = notion.retrieve_blocks_all(&page.id.to_string())?;
-        if let Block::Image(_) = blocks[0] {
-            println!("yeah");
+        if let Block::Image(image) = &blocks[0] {
+            let resp = notion.delete_block(&image.block_basic.id.to_string())?;
+            println!("{:?}", resp);
         }
     }
 

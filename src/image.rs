@@ -5,8 +5,8 @@ use serde::Deserialize;
 #[derive(Deserialize, Clone, Debug, Eq, PartialEq)]
 pub struct Image {
     #[serde(flatten)]
-    block_basic: BlockBasic,
-    image: ImageContent,
+    pub block_basic: BlockBasic,
+    pub image: ImageContent,
 }
 
 #[derive(Deserialize, Clone, Debug, Eq, PartialEq)]
