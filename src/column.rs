@@ -84,9 +84,6 @@ pub enum External {
 pub enum Version {
     Aug2022,
     May2022,
-    Mar2022,
-    Feb2022,
-    Jan2022,
 }
 
 #[derive(Serialize)]
@@ -94,6 +91,13 @@ pub enum Version {
 pub enum Temporary {
     Debug,
     NoVerticalPerson,
+}
+
+#[derive(Serialize)]
+#[serde(untagged)]
+#[allow(dead_code)]
+pub enum SelectColumn {
+    Version(Version),
 }
 
 #[derive(Serialize)]

@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-use crate::column::MultiSelectColumn;
+use crate::column::{MultiSelectColumn, SelectColumn};
 
 #[derive(Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -17,8 +17,15 @@ pub enum Filter {
     Vertical {
         multi_select: MultiSelectFilter,
     },
-    // Horizontal,
-    // External,
+    Horizontal {
+        multi_select: MultiSelectFilter,
+    },
+    External {
+        multi_select: MultiSelectFilter,
+    },
+    Version {
+        select: SelectFilter,
+    },
     #[serde(rename = "Num of Vertical")]
     NumOfVertical {
         formula: FormulaFilter,
@@ -38,6 +45,16 @@ pub enum NumberFilter {
     LessThan(i32),
     GreaterThanOrEqualTo(i32),
     LessThanOrEqualTo(i32),
+    IsEmpty(bool),
+    IsNotEmpty(bool),
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "snake_case")]
+#[allow(dead_code)]
+pub enum SelectFilter {
+    Equals(SelectColumn),
+    DoesNotEqual(SelectColumn),
     IsEmpty(bool),
     IsNotEmpty(bool),
 }
