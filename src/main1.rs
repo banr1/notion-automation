@@ -1,4 +1,5 @@
 mod column;
+mod file;
 mod filter;
 mod icon;
 mod notion;

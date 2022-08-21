@@ -1,15 +1,22 @@
 mod block;
+mod block_basic;
 mod color;
 mod column;
+mod file;
 mod filter;
+mod heading;
 mod icon;
+mod image;
 mod notion;
 mod page;
+mod paragraph;
 mod query_database;
 mod retrieve_blocks;
 mod rich_text;
 mod sort;
+mod synced_block;
 mod update_page;
+use crate::block::Block;
 use crate::column::{Horizontal, Temporary, Version, Vertical};
 use crate::filter::{
     Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
@@ -41,8 +48,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     for page in pages {
         let blocks = notion.retrieve_blocks_all(&page.id.to_string())?;
-        for block in blocks {
-            println!("block: {:?}", &block);
+        if let Block::Image(_) = blocks[0] {
+            println!("yeah");
         }
     }
 
