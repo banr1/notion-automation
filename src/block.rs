@@ -11,7 +11,6 @@ use crate::image::Image;
 use crate::link_preview::LinkPreview;
 use crate::numbered_list_item::NumberedListItem;
 use crate::paragraph::Paragraph;
-use crate::synced_block::SyncedBlock;
 use crate::table_of_contents::TableOfContents;
 use crate::todo::ToDo;
 use crate::toggle::Toggle;

@@ -1,8 +1,9 @@
 use std::fmt;
+use strum::EnumIter;
 
 use serde::Serialize;
 
-#[derive(Serialize, Copy, Clone)]
+#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
 pub enum Vertical {
     Finance,
@@ -62,7 +63,7 @@ impl fmt::Display for Vertical {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
 pub enum Horizontal {
     Project,
@@ -72,7 +73,7 @@ pub enum Horizontal {
     Invisible,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
 pub enum External {
     Wikipedia,
@@ -81,16 +82,17 @@ pub enum External {
     Kindle,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
 pub enum Version {
     Aug2022,
     May2022,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
 pub enum Temporary {
     Debug,
+    CannotRetrieve,
     NoVerticalPerson,
 }

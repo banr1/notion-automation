@@ -10,6 +10,7 @@ reqwest = { version = "0.11", features = ["blocking", "json"] }
 dotenv = "0.15.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+strum = { version = "0.21", features = ["derive"] }
 
 [[bin]]
 name = "main1"

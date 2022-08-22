@@ -40,46 +40,62 @@ use crate::sort::{Sort, SortDirection};
 
 use dotenv::dotenv;
 use std::env;
+use strum::IntoEnumIterator;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
     let notion_api_token = env::var("NOTION_API_TOKEN")?;
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(notion_api_token, database_id);
+    let verticals = Vertical::iter().collect::<Vec<_>>();
 
-    let mut query_database_body = QueryDatabaseBody {
-        sorts: Some(vec![Sort::Timestamp {
-            timestamp: "last_edited_time".to_string(),
-            direction: SortDirection::Ascending,
-        }]),
-        filter: Some(FilterKind::And(vec![
-            Filter::Horizontal {
-                multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(Horizontal::Project),
-            },
-            Filter::Horizontal {
-                multi_select: MultiSelectFilter::<Horizontal>::Contains(Horizontal::Content),
-            },
-            Filter::External {
-                multi_select: MultiSelectFilter::<External>::DoesNotContain(External::Amazon),
-            },
-            Filter::External {
-                multi_select: MultiSelectFilter::<External>::DoesNotContain(External::Kindle),
-            },
-            Filter::Temporary {
-                multi_select: MultiSelectFilter::<Temporary>::DoesNotContain(Temporary::Debug),
-            },
-        ])),
-        start_cursor: None,
-    };
-    let pages = notion.query_database_all(&mut query_database_body)?;
-    println!("length of pages: {}", pages.len());
+    for vertical in verticals {
+        println!("{:?}", vertical);
+        let mut query_database_body = QueryDatabaseBody {
+            sorts: Some(vec![Sort::Timestamp {
+                timestamp: "last_edited_time".to_string(),
+                direction: SortDirection::Ascending,
+            }]),
+            filter: Some(FilterKind::And(vec![
+                Filter::Vertical {
+                    multi_select: MultiSelectFilter::<Vertical>::Contains(vertical),
+                },
+                Filter::Horizontal {
+                    multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(
+                        Horizontal::Project,
+                    ),
+                },
+                Filter::Horizontal {
+                    multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(
+                        Horizontal::Archive,
+                    ),
+                },
+                Filter::Horizontal {
+                    multi_select: MultiSelectFilter::<Horizontal>::Contains(Horizontal::Content),
+                },
+                Filter::External {
+                    multi_select: MultiSelectFilter::<External>::DoesNotContain(External::Amazon),
+                },
+                Filter::External {
+                    multi_select: MultiSelectFilter::<External>::DoesNotContain(External::Kindle),
+                },
+                Filter::Temporary {
+                    multi_select: MultiSelectFilter::<Temporary>::DoesNotContain(
+                        Temporary::CannotRetrieve,
+                    ),
+                },
+            ])),
+            start_cursor: None,
+        };
+        let pages = notion.query_database_all(&mut query_database_body)?;
+        println!("length of pages: {}", pages.len());
 
-    for page in pages {
-        println!("{:?}", page.url.to_string());
-        let blocks = notion.retrieve_blocks_all(&page.id.to_string())?;
-        if let Block::Image(image) = &blocks[0] {
-            let resp = notion.delete_block(&image.block_basic.id.to_string())?;
-            println!("{:?}", resp);
+        for page in pages {
+            println!("{:?}", page.url.to_string());
+            let blocks = notion.retrieve_blocks_all(&page.id.to_string())?;
+            if let Block::Image(image) = &blocks[0] {
+                let resp = notion.delete_block(&image.block_basic.id.to_string())?;
+            }
         }
     }
 

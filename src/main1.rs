@@ -18,76 +18,58 @@ use crate::update_page::{MultiSelectOption, Property, SelectOption, UpdatePageBo
 
 use dotenv::dotenv;
 use std::env;
+use strum::IntoEnumIterator;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
     let notion_api_token = env::var("NOTION_API_TOKEN")?;
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(notion_api_token, database_id);
-    // let verticals = vec![
-    //     Vertical::Finance,
-    //     Vertical::CS,
-    //     Vertical::Crypto,
-    //     Vertical::Philosophy,
-    //     Vertical::Business,
-    //     Vertical::ML,
-    //     Vertical::Enterme,
-    //     Vertical::Politics,
-    //     Vertical::Geography,
-    //     Vertical::Food,
-    //     Vertical::Math,
-    //     Vertical::Music,
-    //     Vertical::Economy,
-    //     Vertical::Activity,
-    //     Vertical::Society,
-    //     Vertical::Biology,
-    //     Vertical::Physics,
-    //     Vertical::Game,
-    //     Vertical::Medical,
-    //     Vertical::Transport,
-    //     Vertical::Law,
-    //     Vertical::Energy,
-    //     Vertical::Design,
-    //     Vertical::Language,
-    // ];
+    let verticals = Vertical::iter().collect::<Vec<_>>();
 
-    // for vertical in verticals {
-    let mut query_database_body = QueryDatabaseBody {
-        sorts: Some(vec![Sort::Timestamp {
-            timestamp: "last_edited_time".to_string(),
-            direction: SortDirection::Descending,
-        }]),
-        filter: Some(FilterKind::And(vec![
-            Filter::Horizontal {
-                multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(Horizontal::Content),
-            },
-            Filter::Horizontal {
-                multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(Horizontal::Project),
-            },
-            Filter::Version {
-                select: SelectFilter::IsEmpty(true),
-            },
-        ])),
-        start_cursor: None,
-    };
+    for vertical in verticals {
+        let mut query_database_body = QueryDatabaseBody {
+            sorts: Some(vec![Sort::Timestamp {
+                timestamp: "last_edited_time".to_string(),
+                direction: SortDirection::Descending,
+            }]),
+            filter: Some(FilterKind::And(vec![
+                Filter::Vertical {
+                    multi_select: MultiSelectFilter::<Vertical>::Contains(vertical),
+                },
+                Filter::Horizontal {
+                    multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(
+                        Horizontal::Content,
+                    ),
+                },
+                Filter::Horizontal {
+                    multi_select: MultiSelectFilter::<Horizontal>::DoesNotContain(
+                        Horizontal::Project,
+                    ),
+                },
+                Filter::Version {
+                    select: SelectFilter::IsEmpty(true),
+                },
+            ])),
+            start_cursor: None,
+        };
 
-    let pages = notion.query_database_all(&mut query_database_body)?;
-    println!("length of pages: {}", pages.len());
-    let update_page_body = UpdatePageBody {
-        properties: Some(Property::Version {
-            select: SelectOption {
-                name: Some("Aug2022".to_string()),
-            },
-        }),
-        // properties: None,
-        archived: None,
-        icon: None,
-        cover: None,
-    };
-    for page in pages {
-        let resp = notion.update_page(&page.id.to_string(), &update_page_body)?;
-        println!("{}", &resp.url.to_string());
+        let pages = notion.query_database_all(&mut query_database_body)?;
+        println!("length of pages: {}", pages.len());
+        let update_page_body = UpdatePageBody {
+            properties: Some(Property::Version {
+                select: SelectOption {
+                    name: Some("Aug2022".to_string()),
+                },
+            }),
+            archived: None,
+            icon: None,
+            cover: None,
+        };
+        for page in pages {
+            let resp = notion.update_page(&page.id.to_string(), &update_page_body)?;
+            println!("{}", &resp.url.to_string());
+        }
     }
-    // }
     Ok(())
 }
