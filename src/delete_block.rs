@@ -1,5 +1,5 @@
 use crate::notion::Notion;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 pub struct DeleteBlockResp {

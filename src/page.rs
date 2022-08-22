@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 use crate::icon::Icon;
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Page {
     // https://developers.notion.com/reference/page
     // object: String,

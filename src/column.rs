@@ -77,6 +77,8 @@ pub enum Horizontal {
 pub enum External {
     Wikipedia,
     Investopedia,
+    Amazon,
+    Kindle,
 }
 
 #[derive(Serialize)]
