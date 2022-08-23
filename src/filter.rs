@@ -1,6 +1,7 @@
 use serde::Serialize;
 
-use crate::column::{External, Horizontal, Symbol, Temporary, Version, Vertical};
+use crate::column::{External, Horizontal, Temporary, Version, Vertical};
+use crate::symbol::Symbol;
 
 #[derive(Serialize)]
 #[serde(rename_all = "snake_case")]

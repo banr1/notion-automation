@@ -6,8 +6,10 @@ mod notion;
 mod page;
 mod query_database;
 mod sort;
+mod symbol;
 mod update_page;
-use crate::column::{Horizontal, Symbol, Temporary, Version, Vertical};
+
+use crate::column::{Horizontal, Temporary, Version, Vertical};
 use crate::file::{External, ExternalContent, File, FileContent};
 use crate::filter::{
     Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
@@ -15,6 +17,7 @@ use crate::filter::{
 use crate::icon::{Emoji, Icon};
 use crate::query_database::QueryDatabaseBody;
 use crate::sort::{Sort, SortDirection};
+use crate::symbol::Symbol;
 use crate::update_page::{MultiSelectOption, Property, SelectOption, UpdatePageBody};
 
 use dotenv::dotenv;

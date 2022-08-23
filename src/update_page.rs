@@ -1,11 +1,12 @@
+use crate::column::Version;
 use crate::icon::{Emoji, Icon};
 use crate::notion::Notion;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
-pub struct SelectOption {
+pub struct SelectOption<T> {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
+    pub name: Option<T>,
 }
 
 #[derive(Serialize)]
@@ -27,7 +28,10 @@ pub enum Property {
         multi_select: Vec<MultiSelectOption>,
     },
     Version {
-        select: SelectOption,
+        select: SelectOption<String>,
+    },
+    Symbol {
+        select: SelectOption<String>,
     },
     Temporary {
         multi_select: Vec<MultiSelectOption>,

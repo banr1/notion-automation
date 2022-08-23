@@ -25,6 +25,7 @@ mod query_database;
 mod retrieve_blocks;
 mod rich_text;
 mod sort;
+mod symbol;
 mod synced_block;
 mod table_of_contents;
 mod todo;
