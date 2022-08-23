@@ -91,6 +91,24 @@ pub enum Version {
 
 #[derive(Serialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
+pub enum Symbol {
+    NEAR,
+    Docker,
+    NotionAutomation,
+}
+
+impl fmt::Display for Symbol {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Symbol::NEAR => write!(f, "🔗"),
+            Symbol::Docker => write!(f, "🐋"),
+            Symbol::NotionAutomation => write!(f, "📦"),
+        }
+    }
+}
+
+#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
+#[allow(dead_code)]
 pub enum Temporary {
     Debug,
     CannotRetrieve,

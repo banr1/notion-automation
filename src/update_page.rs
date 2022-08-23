@@ -1,4 +1,4 @@
-use crate::icon::Emoji;
+use crate::icon::{Emoji, Icon};
 use crate::notion::Notion;
 use serde::{Deserialize, Serialize};
 
@@ -41,7 +41,7 @@ pub struct UpdatePageBody {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub archived: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub icon: Option<Emoji>,
+    pub icon: Option<Icon>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cover: Option<String>,
 }

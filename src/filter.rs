@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-use crate::column::{External, Horizontal, Temporary, Version, Vertical};
+use crate::column::{External, Horizontal, Symbol, Temporary, Version, Vertical};
 
 #[derive(Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -32,6 +32,9 @@ pub enum Filter {
     },
     Temporary {
         multi_select: MultiSelectFilter<Temporary>,
+    },
+    Symbol {
+        select: SelectFilter<Symbol>,
     },
 }
 

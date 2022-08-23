@@ -8,7 +8,7 @@ pub struct File {
 #[derive(Serialize, Deserialize, Eq, PartialEq, Clone, Debug)]
 pub struct FileContent {
     pub url: String,
-    pub expiry_time: String,
+    pub expiry_time: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Eq, PartialEq, Clone, Debug)]
