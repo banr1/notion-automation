@@ -5,6 +5,7 @@ mod icon;
 mod notion;
 mod page;
 mod query_database;
+mod query_database_emoji;
 mod sort;
 mod update_page;
 use crate::column::{Horizontal, Symbol, Temporary, Version, Vertical};
