@@ -40,7 +40,7 @@ impl fmt::Display for Vertical {
             Vertical::Crypto => write!(f, "🥇"),
             Vertical::Philosophy => write!(f, "💎"),
             Vertical::Business => write!(f, "💼"),
-            Vertical::ML => write!(f, "⚙️"),
+            Vertical::ML => write!(f, "🎲"),
             Vertical::Enterme => write!(f, "🎥"),
             Vertical::Politics => write!(f, "📢"),
             Vertical::Geography => write!(f, "🌏"),

@@ -16,7 +16,6 @@ use crate::filter::{
 };
 use crate::icon::{Emoji, Icon};
 use crate::query_database::QueryDatabaseBody;
-use crate::query_database_icon::IconCond;
 use crate::sort::{Sort, SortDirection};
 use crate::symbol::Symbol;
 use crate::update_page::{MultiSelectOption, Property, SelectOption, UpdatePageBody};
@@ -30,6 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let notion_api_token = env::var("NOTION_API_TOKEN")?;
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(notion_api_token, database_id);
+    let symbol = Symbol::CS;
 
     let mut query_database_body = QueryDatabaseBody {
         sorts: Some(vec![Sort::Timestamp {
@@ -38,7 +38,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }]),
         filter: Some(FilterKind::And(vec![
             Filter::Vertical {
-                multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::Crypto),
+                multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::CS),
+            },
+            Filter::NumOfVertical {
+                formula: FormulaFilter::NumberFilter(NumberFilter::Equals(1)),
             },
             // Filter::Temporary {
             //     multi_select: MultiSelectFilter::<Temporary>::Contains(Temporary::Debug),
@@ -47,19 +50,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         start_cursor: None,
     };
 
-    let pages =
-        notion.query_database_icon(&mut query_database_body, &IconCond::NotionAutomation)?;
+    let pages = notion.query_database_icon(&mut query_database_body)?;
     println!("length of pages: {}", pages.len());
-    println!("{:?}", pages[0].icon);
     let update_page_body = UpdatePageBody {
         properties: Some(Property::Symbol {
-            select: SelectOption::<String> {
-                name: Some("NotionAutomation".to_string()),
-            },
+            select: SelectOption::<Symbol> { name: Some(symbol) },
         }),
         archived: None,
         icon: Some(Icon::Emoji(Emoji {
-            emoji: Symbol::NotionAutomation.to_string(),
+            emoji: symbol.to_string(),
         })),
         cover: None,
     };

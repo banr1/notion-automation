@@ -1,6 +1,7 @@
 use crate::column::Version;
 use crate::icon::{Emoji, Icon};
 use crate::notion::Notion;
+use crate::symbol::Symbol;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
@@ -31,7 +32,7 @@ pub enum Property {
         select: SelectOption<String>,
     },
     Symbol {
-        select: SelectOption<String>,
+        select: SelectOption<Symbol>,
     },
     Temporary {
         multi_select: Vec<MultiSelectOption>,
