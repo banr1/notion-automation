@@ -25,7 +25,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let api_token = env::var("NOTION_API_TOKEN")?;
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(api_token, database_id);
-    let all_symbols = Symbol::iter().collect::<Vec<_>>();
+    // let all_symbols = Symbol::iter().collect::<Vec<_>>();
+    let all_symbols = vec![Symbol::MUTB];
 
     for symbol in all_symbols {
         let mut query_database_body = QueryDatabaseBody {
@@ -39,7 +40,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             start_cursor: None,
         };
 
-        let pages = notion.query_database_icon(&mut query_database_body)?;
+        let pages = notion.query_database_all(&mut query_database_body)?;
         println!("length of pages: {}", pages.len());
         let update_page_body = UpdatePageBody {
             properties: Some(Property::Symbol {

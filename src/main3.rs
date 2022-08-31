@@ -29,7 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let notion_api_token = env::var("NOTION_API_TOKEN")?;
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(notion_api_token, database_id);
-    let symbol = Symbol::CS;
+    let symbol = Symbol::Python;
 
     let mut query_database_body = QueryDatabaseBody {
         sorts: Some(vec![Sort::Timestamp {
@@ -39,6 +39,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         filter: Some(FilterKind::And(vec![
             Filter::Vertical {
                 multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::CS),
+            },
+            // Filter::Vertical {
+            //     multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::ML),
+            // },
+            Filter::Symbol {
+                select: SelectFilter::IsEmpty(true),
             },
             Filter::NumOfVertical {
                 formula: FormulaFilter::NumberFilter(NumberFilter::Equals(1)),
