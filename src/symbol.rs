@@ -8,11 +8,13 @@ use serde::Serialize;
 pub enum Symbol {
     // Vertical
     Finance,
-    CS,
+    #[serde(rename = "CS")]
+    Cs,
     Crypto,
     Philosophy,
     Business,
-    ML,
+    #[serde(rename = "ML")]
+    Ml,
     Enterme,
     Politics,
     Geography,
@@ -44,32 +46,41 @@ pub enum Symbol {
     Avalanche,
     Binance,
     Bitcoin,
+    Celo,
     Cosmos,
     Ethereum,
+    Flow,
     InternetComputer,
-    NEAR,
+    #[serde(rename = "NEAR")]
+    Near,
     Polkadot,
     Polygon,
     Solana,
     Solidity,
-    STEPN,
+    #[serde(rename = "STEPN")]
+    Stepn,
     ZeroToHero,
     // Product (CS)
-    AWS,
+    Apple,
+    #[serde(rename = "AWS")]
+    Aws,
     C,
     #[serde(rename = "C++")]
     CPlusPlus,
     #[serde(rename = "C#")]
     CSharp,
-    CSS,
+    #[serde(rename = "CSS")]
+    Css,
     Docker,
     Flutter,
-    GCP,
+    #[serde(rename = "GCP")]
+    Gcp,
     Git,
     GitHub,
     GitLab,
     Haskell,
-    HTML,
+    #[serde(rename = "HTML")]
+    Html,
     Java,
     JavaScript,
     Kotlin,
@@ -84,27 +95,35 @@ pub enum Symbol {
     TypeScript,
     // Product (Other)
     Antifragile,
+    #[serde(rename = "MHRise")]
+    MhRise,
     Notion,
     Pandas,
 
     // Project
     Avilen,
+    #[serde(rename = "DeNA")]
+    Dena,
     Drivearth,
     Gemma,
-    MUTB,
+    #[serde(rename = "MUTB")]
+    Mutb,
     NotionAutomation,
     QuaternityBot,
+    #[serde(rename = "SMFGCompe")]
+    SmfgCompe,
+    Trajectory,
 }
 
 impl fmt::Display for Symbol {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Symbol::Finance => write!(f, "💰"),
-            Symbol::CS => write!(f, "💻"),
+            Symbol::Cs => write!(f, "💻"),
             Symbol::Crypto => write!(f, "🥇"),
             Symbol::Philosophy => write!(f, "💎"),
             Symbol::Business => write!(f, "💼"),
-            Symbol::ML => write!(f, "🎲"),
+            Symbol::Ml => write!(f, "🎲"),
             Symbol::Enterme => write!(f, "🎥"),
             Symbol::Politics => write!(f, "📢"),
             Symbol::Geography => write!(f, "🌏"),
@@ -135,30 +154,33 @@ impl fmt::Display for Symbol {
             Symbol::Avalanche => write!(f, "🔺"),
             Symbol::Binance => write!(f, "🍯"),
             Symbol::Bitcoin => write!(f, "🏵️"),
-            Symbol::Cosmos => write!(f, "🎆"),
+            Symbol::Celo => write!(f, "🪲"),
+            Symbol::Cosmos => write!(f, "🌑"),
             Symbol::Ethereum => write!(f, "🕋"),
+            Symbol::Flow => write!(f, "🎾"),
             Symbol::InternetComputer => write!(f, "🪢"),
-            Symbol::NEAR => write!(f, "🔗"),
+            Symbol::Near => write!(f, "🔗"),
             Symbol::Polkadot => write!(f, "👚"),
             Symbol::Polygon => write!(f, "👾"),
             Symbol::Solana => write!(f, "🐠"),
             Symbol::Solidity => write!(f, "♟️"),
-            Symbol::STEPN => write!(f, "🥗"),
+            Symbol::Stepn => write!(f, "🥗"),
             Symbol::ZeroToHero => write!(f, "🦸🏽"),
 
-            Symbol::AWS => write!(f, "🧀"),
+            Symbol::Apple => write!(f, "🖥️"),
+            Symbol::Aws => write!(f, "🧀"),
             Symbol::C => write!(f, "🧞"),
             Symbol::CPlusPlus => write!(f, "🧞‍♂️"),
             Symbol::CSharp => write!(f, "🧞‍♀️"),
-            Symbol::CSS => write!(f, "🔹"),
+            Symbol::Css => write!(f, "🔹"),
             Symbol::Docker => write!(f, "🐋"),
             Symbol::Flutter => write!(f, "🦕"),
-            Symbol::GCP => write!(f, "⛅"),
+            Symbol::Gcp => write!(f, "⛅"),
             Symbol::Git => write!(f, "🏮"),
             Symbol::GitHub => write!(f, "🐱"),
             Symbol::GitLab => write!(f, "🦊"),
             Symbol::Haskell => write!(f, "🦿"),
-            Symbol::HTML => write!(f, "🔸"),
+            Symbol::Html => write!(f, "🔸"),
             Symbol::Java => write!(f, "💈"),
             Symbol::JavaScript => write!(f, "🌮"),
             Symbol::Kotlin => write!(f, "🚎"),
@@ -173,15 +195,19 @@ impl fmt::Display for Symbol {
             Symbol::TypeScript => write!(f, "🧊"),
 
             Symbol::Antifragile => write!(f, "🅰️"),
+            Symbol::MhRise => write!(f, "🦖"),
             Symbol::Notion => write!(f, "🔲"),
             Symbol::Pandas => write!(f, "🐼"),
 
             Symbol::Avilen => write!(f, "🐵"),
+            Symbol::Dena => write!(f, "🐻‍❄️"),
             Symbol::Drivearth => write!(f, "🚘"),
             Symbol::Gemma => write!(f, "♠️"),
-            Symbol::MUTB => write!(f, "⛽"),
+            Symbol::Mutb => write!(f, "⛽"),
             Symbol::NotionAutomation => write!(f, "📦"),
+            Symbol::SmfgCompe => write!(f, "🥒"),
             Symbol::QuaternityBot => write!(f, "🤖"),
+            Symbol::Trajectory => write!(f, "🕰️"),
         }
     }
 }
