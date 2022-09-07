@@ -1,9 +1,9 @@
 use std::fmt;
 use strum::EnumIter;
 
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
-#[derive(Serialize, Copy, Clone, EnumIter, Debug)]
+#[derive(Serialize, Deserialize, Copy, Clone, EnumIter, Debug)]
 #[allow(dead_code)]
 pub enum Symbol {
     // Vertical
@@ -40,6 +40,8 @@ pub enum Symbol {
     CryptoFinance,
     CryptoGame,
     CryptoLaw,
+    #[serde(rename = "FinanceML")]
+    FinanceMl,
 
     // Product (Crypto)
     Astar,
@@ -64,6 +66,7 @@ pub enum Symbol {
     Apple,
     #[serde(rename = "AWS")]
     Aws,
+    Azure,
     C,
     #[serde(rename = "C++")]
     CPlusPlus,
@@ -93,6 +96,8 @@ pub enum Symbol {
     Scala,
     Swift,
     TypeScript,
+    #[serde(rename = "VSCode")]
+    VsCode,
     // Product (Other)
     Antifragile,
     #[serde(rename = "MHRise")]
@@ -105,6 +110,7 @@ pub enum Symbol {
     #[serde(rename = "DeNA")]
     Dena,
     Drivearth,
+    Friend,
     Gemma,
     #[serde(rename = "MUTB")]
     Mutb,
@@ -112,7 +118,10 @@ pub enum Symbol {
     QuaternityBot,
     #[serde(rename = "SMFGCompe")]
     SmfgCompe,
+    #[serde(rename = "TA")]
+    Ta,
     Trajectory,
+    TrivialNotes,
 }
 
 impl fmt::Display for Symbol {
@@ -149,6 +158,7 @@ impl fmt::Display for Symbol {
             Symbol::CryptoFinance => write!(f, "〽️"),
             Symbol::CryptoGame => write!(f, "🥌"),
             Symbol::CryptoLaw => write!(f, "🔨"),
+            Symbol::FinanceMl => write!(f, "🛡️"),
 
             Symbol::Astar => write!(f, "🍬"),
             Symbol::Avalanche => write!(f, "🔺"),
@@ -169,6 +179,7 @@ impl fmt::Display for Symbol {
 
             Symbol::Apple => write!(f, "🖥️"),
             Symbol::Aws => write!(f, "🧀"),
+            Symbol::Azure => write!(f, "🧿"),
             Symbol::C => write!(f, "🧞"),
             Symbol::CPlusPlus => write!(f, "🧞‍♂️"),
             Symbol::CSharp => write!(f, "🧞‍♀️"),
@@ -193,6 +204,7 @@ impl fmt::Display for Symbol {
             Symbol::Scala => write!(f, "💄"),
             Symbol::Swift => write!(f, "🦃"),
             Symbol::TypeScript => write!(f, "🧊"),
+            Symbol::VsCode => write!(f, "🐬"),
 
             Symbol::Antifragile => write!(f, "🅰️"),
             Symbol::MhRise => write!(f, "🦖"),
@@ -202,12 +214,18 @@ impl fmt::Display for Symbol {
             Symbol::Avilen => write!(f, "🐵"),
             Symbol::Dena => write!(f, "🐻‍❄️"),
             Symbol::Drivearth => write!(f, "🚘"),
+            Symbol::Friend => write!(f, "🌵"),
             Symbol::Gemma => write!(f, "♠️"),
             Symbol::Mutb => write!(f, "⛽"),
             Symbol::NotionAutomation => write!(f, "📦"),
-            Symbol::SmfgCompe => write!(f, "🥒"),
             Symbol::QuaternityBot => write!(f, "🤖"),
+            Symbol::SmfgCompe => write!(f, "🥒"),
+            Symbol::Ta => write!(f, "🦐"),
             Symbol::Trajectory => write!(f, "🕰️"),
+            Symbol::TrivialNotes => write!(f, "⛲"),
+            
+            // Symbol::XXX => write!(f, "X"),
+            // Symbol::XXX => write!(f, "X"),
         }
     }
 }
