@@ -46,12 +46,14 @@ pub enum Symbol {
     // Product (Crypto)
     Astar,
     Avalanche,
+    Axie,
     Binance,
     Bitcoin,
     Celo,
     Cosmos,
     Ethereum,
     Flow,
+    Harmony,
     InternetComputer,
     #[serde(rename = "NEAR")]
     Near,
@@ -162,12 +164,14 @@ impl fmt::Display for Symbol {
 
             Symbol::Astar => write!(f, "🍬"),
             Symbol::Avalanche => write!(f, "🔺"),
+            Symbol::Axie => write!(f, "🪁"),
             Symbol::Binance => write!(f, "🍯"),
             Symbol::Bitcoin => write!(f, "🏵️"),
             Symbol::Celo => write!(f, "🪲"),
             Symbol::Cosmos => write!(f, "🌑"),
             Symbol::Ethereum => write!(f, "🕋"),
             Symbol::Flow => write!(f, "🎾"),
+            Symbol::Harmony => write!(f, "🦋"),
             Symbol::InternetComputer => write!(f, "🪢"),
             Symbol::Near => write!(f, "🔗"),
             Symbol::Polkadot => write!(f, "👚"),
@@ -224,6 +228,11 @@ impl fmt::Display for Symbol {
             Symbol::Trajectory => write!(f, "🕰️"),
             Symbol::TrivialNotes => write!(f, "⛲"),
             
+            // Symbol::XXX => write!(f, "X"),
+            // Symbol::XXX => write!(f, "X"),
+            // Symbol::XXX => write!(f, "X"),
+            // Symbol::XXX => write!(f, "X"),
+            // Symbol::XXX => write!(f, "X"),
             // Symbol::XXX => write!(f, "X"),
             // Symbol::XXX => write!(f, "X"),
         }
