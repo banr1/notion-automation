@@ -3,7 +3,9 @@ mod file;
 mod filter;
 mod icon;
 mod notion;
+mod object;
 mod page;
+mod property;
 mod query_database;
 mod query_database_icon;
 mod sort;
@@ -11,10 +13,11 @@ mod symbol;
 mod update_page;
 use crate::filter::{Filter, FilterKind, SelectFilter};
 use crate::icon::{Emoji, Icon};
+use crate::property::{Property, SelectOption};
 use crate::query_database::QueryDatabaseBody;
 use crate::sort::{Sort, SortDirection};
 use crate::symbol::Symbol;
-use crate::update_page::{Property, SelectOption, UpdatePageBody};
+use crate::update_page::{UpdatePageBody};
 
 use dotenv::dotenv;
 use std::env;
@@ -25,8 +28,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let api_token = env::var("NOTION_API_TOKEN")?;
     let database_id = env::var("NOTION_DATABASE_ID")?;
     let notion = notion::Notion::new(api_token, database_id);
-    // let all_symbols = Symbol::iter().collect::<Vec<_>>();
-    let all_symbols = vec![Symbol::MUTB];
+    let mut all_symbols = Symbol::iter().collect::<Vec<_>>();
+    all_symbols.sort();
+    all_symbols.reverse();
 
     for symbol in all_symbols {
         let mut query_database_body = QueryDatabaseBody {
@@ -40,7 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             start_cursor: None,
         };
 
-        let pages = notion.query_database_all(&mut query_database_body)?;
+        let pages = notion.query_database_icon(&mut query_database_body)?;
         println!("length of pages: {}", pages.len());
         let update_page_body = UpdatePageBody {
             properties: Some(Property::Symbol {

@@ -1,7 +1,10 @@
+use std::str::FromStr;
+
 use crate::icon::Icon;
 use crate::notion::Notion;
 use crate::page::Page;
 use crate::query_database::QueryDatabaseBody;
+use crate::symbol::Symbol;
 
 impl Notion {
     pub fn query_database_icon(
@@ -14,19 +17,15 @@ impl Notion {
             if let Some(v) = &page.icon {
                 match v {
                     Icon::Emoji(e) => {
-                        // ()
+                        let true_emoji = page.properties.Symbol.select.name.to_string();
+
+                        if e.emoji != true_emoji {
+                            filtered_pages.push(page.clone());
+                        }
+                    }
+                    Icon::File(_) | Icon::External(_) => {
                         filtered_pages.push(page.clone());
-                        // if e.emoji == "⚙️".to_string() {
-                        //     filtered_pages.push(page.clone());
-                        // }
                     }
-                    Icon::File(f) => {
-                        ()
-                        // if f.file.url.contains(&"notion.png".to_string()) {
-                        //     filtered_pages.push(page.clone());
-                        // }
-                    }
-                    Icon::External(_) => (),
                 }
             }
         }

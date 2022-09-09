@@ -1,9 +1,11 @@
+use std::error::Error;
 use std::fmt;
+use std::str::FromStr;
 use strum::EnumIter;
 
 use serde::{Serialize, Deserialize};
 
-#[derive(Serialize, Deserialize, Copy, Clone, EnumIter, Debug)]
+#[derive(Serialize, Deserialize, Copy, Clone, EnumIter, Debug, PartialEq, Eq, PartialOrd, Ord)]
 #[allow(dead_code)]
 pub enum Symbol {
     // Vertical
@@ -21,7 +23,6 @@ pub enum Symbol {
     Food,
     Math,
     Music,
-    Economy,
     Activity,
     Society,
     Biology,
@@ -53,6 +54,7 @@ pub enum Symbol {
     Cosmos,
     Ethereum,
     Flow,
+    GodsUnchained,
     Harmony,
     InternetComputer,
     #[serde(rename = "NEAR")]
@@ -83,6 +85,7 @@ pub enum Symbol {
     Git,
     GitHub,
     GitLab,
+    Go,
     Haskell,
     #[serde(rename = "HTML")]
     Html,
@@ -102,6 +105,8 @@ pub enum Symbol {
     VsCode,
     // Product (Other)
     Antifragile,
+    DuelMasters,
+    JapaneseLang,
     #[serde(rename = "MHRise")]
     MhRise,
     Notion,
@@ -141,7 +146,6 @@ impl fmt::Display for Symbol {
             Symbol::Food => write!(f, "🍚"),
             Symbol::Math => write!(f, "📐"),
             Symbol::Music => write!(f, "🎵"),
-            Symbol::Economy => write!(f, "💸"),
             Symbol::Activity => write!(f, "🥏"),
             Symbol::Society => write!(f, "🕸️"),
             Symbol::Biology => write!(f, "🦠"),
@@ -154,7 +158,7 @@ impl fmt::Display for Symbol {
             Symbol::Design => write!(f, "🖼️"),
             Symbol::Language => write!(f, "🐨"),
 
-            Symbol::BusinessFinance => write!(f, "🧾"),
+            Symbol::BusinessFinance => write!(f, "💸"),
             Symbol::CryptoCS => write!(f, "🍿"),
             Symbol::CryptoEconomy => write!(f, "🪶"),
             Symbol::CryptoFinance => write!(f, "〽️"),
@@ -171,6 +175,7 @@ impl fmt::Display for Symbol {
             Symbol::Cosmos => write!(f, "🌑"),
             Symbol::Ethereum => write!(f, "🕋"),
             Symbol::Flow => write!(f, "🎾"),
+            Symbol::GodsUnchained => write!(f, "🤺"),
             Symbol::Harmony => write!(f, "🦋"),
             Symbol::InternetComputer => write!(f, "🪢"),
             Symbol::Near => write!(f, "🔗"),
@@ -194,6 +199,7 @@ impl fmt::Display for Symbol {
             Symbol::Git => write!(f, "🏮"),
             Symbol::GitHub => write!(f, "🐱"),
             Symbol::GitLab => write!(f, "🦊"),
+            Symbol::Go => write!(f, "🎽"),
             Symbol::Haskell => write!(f, "🦿"),
             Symbol::Html => write!(f, "🔸"),
             Symbol::Java => write!(f, "💈"),
@@ -211,6 +217,8 @@ impl fmt::Display for Symbol {
             Symbol::VsCode => write!(f, "🐬"),
 
             Symbol::Antifragile => write!(f, "🅰️"),
+            Symbol::DuelMasters => write!(f, "🐉"),
+            Symbol::JapaneseLang => write!(f, "🗻"),
             Symbol::MhRise => write!(f, "🦖"),
             Symbol::Notion => write!(f, "🔲"),
             Symbol::Pandas => write!(f, "🐼"),
@@ -237,4 +245,16 @@ impl fmt::Display for Symbol {
             // Symbol::XXX => write!(f, "X"),
         }
     }
+}
+
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct SymbolProperty {
+    pub id: String,
+    pub select: SymbolSelect,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct SymbolSelect {
+    pub name: Symbol,
 }

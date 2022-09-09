@@ -1,4 +1,4 @@
-use crate::symbol::Symbol;
+use crate::symbol::{Symbol, SymbolProperty};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -36,7 +36,7 @@ pub enum Property {
     },
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Properties {
-    
+    pub Symbol: SymbolProperty,
 }

@@ -3,7 +3,9 @@ mod file;
 mod filter;
 mod icon;
 mod notion;
+mod object;
 mod page;
+mod property;
 mod query_database;
 mod sort;
 mod symbol;
@@ -18,7 +20,7 @@ use crate::icon::{Emoji, Icon};
 use crate::query_database::QueryDatabaseBody;
 use crate::sort::{Sort, SortDirection};
 use crate::symbol::Symbol;
-use crate::update_page::{MultiSelectOption, Property, SelectOption, UpdatePageBody};
+use crate::update_page::{UpdatePageBody};
 
 use dotenv::dotenv;
 use std::env;

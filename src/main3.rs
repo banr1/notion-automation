@@ -3,7 +3,9 @@ mod file;
 mod filter;
 mod icon;
 mod notion;
+mod object;
 mod page;
+mod property;
 mod query_database;
 mod query_database_icon;
 mod sort;
@@ -15,10 +17,11 @@ use crate::filter::{
     Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
 };
 use crate::icon::{Emoji, Icon};
+use crate::property::{Property, SelectOption};
 use crate::query_database::QueryDatabaseBody;
 use crate::sort::{Sort, SortDirection};
 use crate::symbol::Symbol;
-use crate::update_page::{MultiSelectOption, Property, SelectOption, UpdatePageBody};
+use crate::update_page::UpdatePageBody;
 
 use dotenv::dotenv;
 use std::env;
@@ -38,7 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }]),
         filter: Some(FilterKind::And(vec![
             Filter::Vertical {
-                multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::CS),
+                multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::Cs),
             },
             // Filter::Vertical {
             //     multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::ML),
@@ -47,7 +50,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 select: SelectFilter::IsEmpty(true),
             },
             Filter::NumOfVertical {
-                formula: FormulaFilter::NumberFilter(NumberFilter::Equals(1)),
+                formula: FormulaFilter::NumberFilter(NumberFilter::Equals(2)),
             },
             // Filter::Temporary {
             //     multi_select: MultiSelectFilter::<Temporary>::Contains(Temporary::Debug),
