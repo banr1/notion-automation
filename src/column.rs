@@ -7,13 +7,11 @@ use serde::Serialize;
 #[allow(dead_code)]
 pub enum Vertical {
     Finance,
-    #[serde(rename = "CS")]
-    Cs,
+    Computer,
     Crypto,
     Philosophy,
     Business,
-    #[serde(rename = "ML")]
-    Ml,
+    Stat,
     Enterme,
     Politics,
     Geography,
@@ -38,11 +36,11 @@ impl fmt::Display for Vertical {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Vertical::Finance => write!(f, "💰"),
-            Vertical::Cs => write!(f, "💻"),
+            Vertical::Computer => write!(f, "💻"),
             Vertical::Crypto => write!(f, "🥇"),
             Vertical::Philosophy => write!(f, "💎"),
             Vertical::Business => write!(f, "💼"),
-            Vertical::Ml => write!(f, "🎲"),
+            Vertical::Stat => write!(f, "🎲"),
             Vertical::Enterme => write!(f, "🎥"),
             Vertical::Politics => write!(f, "📢"),
             Vertical::Geography => write!(f, "🌏"),

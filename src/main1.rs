@@ -11,10 +11,9 @@ mod sort;
 mod symbol;
 mod update_page;
 
-use crate::column::{Horizontal, Temporary, Version, Vertical};
-use crate::file::{External, ExternalContent, File, FileContent};
+use crate::column::Vertical;
 use crate::filter::{
-    Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
+    Filter, FilterKind, MultiSelectFilter, SelectFilter,
 };
 use crate::icon::{Emoji, Icon};
 use crate::query_database::QueryDatabaseBody;

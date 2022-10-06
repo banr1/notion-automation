@@ -38,5 +38,6 @@ pub enum Property {
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Properties {
-    pub Symbol: SymbolProperty,
+    #[serde(rename = "Symbol")]
+    pub symbol: SymbolProperty,
 }

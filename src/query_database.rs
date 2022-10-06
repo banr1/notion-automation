@@ -43,6 +43,24 @@ impl Notion {
         Ok(resp)
     }
 
+    pub fn query_database_recursive(
+        &self,
+        body: &mut QueryDatabaseBody,
+        max_num: usize,
+    ) -> Result<Vec<Page>, Box<dyn std::error::Error>> {
+        let mut has_more = true;
+        let mut start_cursor: Option<String> = None;
+        let mut pages = Vec::<Page>::new();
+        while has_more {
+            body.start_cursor = start_cursor;
+            let mut resp = self.query_database(&body)?;
+            pages.append(&mut resp.results);
+            has_more = if pages.len() >= max_num {false} else {resp.has_more};
+            start_cursor = resp.next_cursor;
+        }
+        Ok(pages)
+    }
+
     pub fn query_database_all(
         &self,
         body: &mut QueryDatabaseBody,

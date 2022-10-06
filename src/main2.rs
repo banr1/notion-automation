@@ -32,11 +32,11 @@ mod synced_block;
 mod table_of_contents;
 mod todo;
 mod toggle;
-mod update_page;
+// mod update_page;
 use crate::block::Block;
-use crate::column::{External, Horizontal, Temporary, Version, Vertical};
+use crate::column::{External, Horizontal, Temporary, Vertical};
 use crate::filter::{
-    Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
+    Filter, FilterKind, MultiSelectFilter,
 };
 use crate::query_database::QueryDatabaseBody;
 use crate::sort::{Sort, SortDirection};
@@ -97,7 +97,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("{:?}", page.url.to_string());
             let blocks = notion.retrieve_blocks_all(&page.id.to_string())?;
             if let Block::Image(image) = &blocks[0] {
-                let resp = notion.delete_block(&image.block_basic.id.to_string())?;
+                notion.delete_block(&image.block_basic.id.to_string())?;
             }
         }
     }

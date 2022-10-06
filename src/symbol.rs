@@ -1,22 +1,18 @@
-use std::error::Error;
 use std::fmt;
-use std::str::FromStr;
 use strum::EnumIter;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Copy, Clone, EnumIter, Debug, PartialEq, Eq, PartialOrd, Ord)]
 #[allow(dead_code)]
 pub enum Symbol {
     // Vertical
     Finance,
-    #[serde(rename = "CS")]
-    Cs,
+    Computer,
     Crypto,
     Philosophy,
     Business,
-    #[serde(rename = "ML")]
-    Ml,
+    Stat,
     Enterme,
     Politics,
     Geography,
@@ -28,7 +24,7 @@ pub enum Symbol {
     Biology,
     Physics,
     Game,
-    Medical,
+    Medicine,
     Transport,
     Law,
     Energy,
@@ -36,27 +32,43 @@ pub enum Symbol {
     Language,
 
     BusinessFinance,
-    CryptoCS,
-    CryptoEconomy,
+    CryptoBusiness,
+    CryptoComputer,
     CryptoFinance,
+    CryptoFinanceStat,
     CryptoGame,
     CryptoLaw,
-    #[serde(rename = "FinanceML")]
-    FinanceMl,
+    FinanceComputer,
+    FinanceStat,
+    GeographyFinance,
+    PoliticsBusiness,
+    PoliticsFinance,
+    StatComputer,
+
+    // Horizontal
+    Project,
 
     // Product (Crypto)
+    Arweave,
     Astar,
     Avalanche,
     Axie,
     Binance,
     Bitcoin,
+    BitcoinFinance,
+    Bitfinex,
+    Bybit,
     Celo,
     Cosmos,
     Ethereum,
+    Fantom,
     Flow,
+    #[serde(rename = "FTX")]
+    Ftx,
     GodsUnchained,
     Harmony,
     InternetComputer,
+    Move,
     #[serde(rename = "NEAR")]
     Near,
     Polkadot,
@@ -66,7 +78,7 @@ pub enum Symbol {
     #[serde(rename = "STEPN")]
     Stepn,
     ZeroToHero,
-    // Product (CS)
+    // Product (Computer)
     Apple,
     #[serde(rename = "AWS")]
     Aws,
@@ -106,27 +118,37 @@ pub enum Symbol {
     // Product (Other)
     Antifragile,
     DuelMasters,
+    Forex,
+    Human,
     JapaneseLang,
     #[serde(rename = "MHRise")]
     MhRise,
     Notion,
     Pandas,
+    TradingView,
+    Stock,
 
     // Project
     Avilen,
+    BusinessIdea,
     #[serde(rename = "DeNA")]
     Dena,
     Drivearth,
     Friend,
     Gemma,
+    JQuants,
     #[serde(rename = "MUTB")]
     Mutb,
     NotionAutomation,
     QuaternityBot,
+    #[serde(rename = "RMS")]
+    Rms,
+    SelfUnderstanding,
     #[serde(rename = "SMFGCompe")]
     SmfgCompe,
     #[serde(rename = "TA")]
     Ta,
+    TradingIdea,
     Trajectory,
     TrivialNotes,
 }
@@ -135,11 +157,11 @@ impl fmt::Display for Symbol {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Symbol::Finance => write!(f, "💰"),
-            Symbol::Cs => write!(f, "💻"),
+            Symbol::Computer => write!(f, "💻"),
             Symbol::Crypto => write!(f, "🥇"),
             Symbol::Philosophy => write!(f, "💎"),
             Symbol::Business => write!(f, "💼"),
-            Symbol::Ml => write!(f, "🎲"),
+            Symbol::Stat => write!(f, "🎲"),
             Symbol::Enterme => write!(f, "🎥"),
             Symbol::Politics => write!(f, "📢"),
             Symbol::Geography => write!(f, "🌏"),
@@ -151,33 +173,48 @@ impl fmt::Display for Symbol {
             Symbol::Biology => write!(f, "🦠"),
             Symbol::Physics => write!(f, "🍎"),
             Symbol::Game => write!(f, "🎮"),
-            Symbol::Medical => write!(f, "💉"),
+            Symbol::Medicine => write!(f, "💉"),
             Symbol::Transport => write!(f, "🚋"),
             Symbol::Law => write!(f, "⚖️"),
             Symbol::Energy => write!(f, "⚡"),
             Symbol::Design => write!(f, "🖼️"),
             Symbol::Language => write!(f, "🐨"),
 
+            Symbol::Project => write!(f, "🚀"),
+
             Symbol::BusinessFinance => write!(f, "💸"),
-            Symbol::CryptoCS => write!(f, "🍿"),
-            Symbol::CryptoEconomy => write!(f, "🪶"),
+            Symbol::CryptoBusiness => write!(f, "🪶"),
+            Symbol::CryptoComputer => write!(f, "🍿"),
             Symbol::CryptoFinance => write!(f, "〽️"),
+            Symbol::CryptoFinanceStat => write!(f, "🚁"),
             Symbol::CryptoGame => write!(f, "🥌"),
             Symbol::CryptoLaw => write!(f, "🔨"),
-            Symbol::FinanceMl => write!(f, "🛡️"),
+            Symbol::FinanceComputer => write!(f, "🚛"),
+            Symbol::FinanceStat => write!(f, "🛡️"),
+            Symbol::GeographyFinance => write!(f, "🪴"),
+            Symbol::PoliticsBusiness => write!(f, "🎷"),
+            Symbol::PoliticsFinance => write!(f, "📣"),
+            Symbol::StatComputer => write!(f, "🛸"),
 
+            Symbol::Arweave => write!(f, "👓"),
             Symbol::Astar => write!(f, "🍬"),
             Symbol::Avalanche => write!(f, "🔺"),
             Symbol::Axie => write!(f, "🪁"),
             Symbol::Binance => write!(f, "🍯"),
             Symbol::Bitcoin => write!(f, "🏵️"),
+            Symbol::BitcoinFinance => write!(f, "🌼"),
+            Symbol::Bitfinex => write!(f, "🥬"),
+            Symbol::Bybit => write!(f, "🌗"),
             Symbol::Celo => write!(f, "🪲"),
             Symbol::Cosmos => write!(f, "🌑"),
             Symbol::Ethereum => write!(f, "🕋"),
+            Symbol::Fantom => write!(f, "🧢"),
             Symbol::Flow => write!(f, "🎾"),
+            Symbol::Ftx => write!(f, "🛋️"),
             Symbol::GodsUnchained => write!(f, "🤺"),
             Symbol::Harmony => write!(f, "🦋"),
             Symbol::InternetComputer => write!(f, "🪢"),
+            Symbol::Move => write!(f, "🔮"),
             Symbol::Near => write!(f, "🔗"),
             Symbol::Polkadot => write!(f, "👚"),
             Symbol::Polygon => write!(f, "👾"),
@@ -218,26 +255,32 @@ impl fmt::Display for Symbol {
 
             Symbol::Antifragile => write!(f, "🅰️"),
             Symbol::DuelMasters => write!(f, "🐉"),
+            Symbol::Forex => write!(f, "🕯️"),
+            Symbol::Human => write!(f, "🚶‍♂️"),
             Symbol::JapaneseLang => write!(f, "🗻"),
             Symbol::MhRise => write!(f, "🦖"),
             Symbol::Notion => write!(f, "🔲"),
             Symbol::Pandas => write!(f, "🐼"),
+            Symbol::TradingView => write!(f, "🎄"),
+            Symbol::Stock => write!(f, "🥕"),
 
             Symbol::Avilen => write!(f, "🐵"),
+            Symbol::BusinessIdea => write!(f, "💡"),
             Symbol::Dena => write!(f, "🐻‍❄️"),
             Symbol::Drivearth => write!(f, "🚘"),
             Symbol::Friend => write!(f, "🌵"),
             Symbol::Gemma => write!(f, "♠️"),
+            Symbol::JQuants => write!(f, "🥢"),
             Symbol::Mutb => write!(f, "⛽"),
             Symbol::NotionAutomation => write!(f, "📦"),
             Symbol::QuaternityBot => write!(f, "🤖"),
+            Symbol::Rms => write!(f, "⭕"),
+            Symbol::SelfUnderstanding => write!(f, "🪂"),
             Symbol::SmfgCompe => write!(f, "🥒"),
             Symbol::Ta => write!(f, "🦐"),
+            Symbol::TradingIdea => write!(f, "🎡"),
             Symbol::Trajectory => write!(f, "🕰️"),
             Symbol::TrivialNotes => write!(f, "⛲"),
-            
-            // Symbol::XXX => write!(f, "X"),
-            // Symbol::XXX => write!(f, "X"),
             // Symbol::XXX => write!(f, "X"),
             // Symbol::XXX => write!(f, "X"),
             // Symbol::XXX => write!(f, "X"),
@@ -246,7 +289,6 @@ impl fmt::Display for Symbol {
         }
     }
 }
-
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct SymbolProperty {

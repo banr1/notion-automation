@@ -3,7 +3,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 pub struct DeleteBlockResp {
-    id: String,
+    // id: String,
 }
 
 impl Notion {

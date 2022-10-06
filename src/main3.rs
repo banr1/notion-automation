@@ -11,8 +11,7 @@ mod query_database_icon;
 mod sort;
 mod symbol;
 mod update_page;
-use crate::column::{Horizontal, Temporary, Version, Vertical};
-use crate::file::{External, ExternalContent, File, FileContent};
+use crate::column::Vertical;
 use crate::filter::{
     Filter, FilterKind, FormulaFilter, MultiSelectFilter, NumberFilter, SelectFilter,
 };
@@ -25,7 +24,6 @@ use crate::update_page::UpdatePageBody;
 
 use dotenv::dotenv;
 use std::env;
-use strum::IntoEnumIterator;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
@@ -41,7 +39,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }]),
         filter: Some(FilterKind::And(vec![
             Filter::Vertical {
-                multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::Cs),
+                multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::Computer),
             },
             // Filter::Vertical {
             //     multi_select: MultiSelectFilter::<Vertical>::Contains(Vertical::ML),
@@ -59,7 +57,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         start_cursor: None,
     };
 
-    let pages = notion.query_database_icon(&mut query_database_body)?;
+    let pages = notion.query_database_icon(&mut query_database_body, None)?;
     println!("length of pages: {}", pages.len());
     let update_page_body = UpdatePageBody {
         properties: Some(Property::Symbol {
