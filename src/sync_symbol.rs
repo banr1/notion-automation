@@ -40,7 +40,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         start_cursor: None,
     };
 
-    let pages = notion.query_database_icon(&mut query_database_body, Some(num_pages))?;
+    let mut pages = notion.query_database_icon(&mut query_database_body, Some(num_pages))?;
+    pages.reverse();
     println!("length of pages: {}", pages.len());
     for page in pages {
         let symbol = page.properties.symbol.select.name;
